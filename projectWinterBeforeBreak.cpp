@@ -8,7 +8,7 @@ using namespace std;
 
 int main() {
 
-    int numberTuff;
+    double numberTuff;
 
     cout << "What is 6 + 7?" << endl;
     cin >> numberTuff;
