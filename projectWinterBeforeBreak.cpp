@@ -4,15 +4,12 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-//Varibles
-
-
-
+#include <random>
 
 using namespace std;
 
 int main() {
-int playerH, gold, enemyH1, enemyH2, enemyH3, playerA, playerD;
+
  
     
 }
