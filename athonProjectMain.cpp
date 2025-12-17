@@ -1,4 +1,4 @@
-\#include <iostream>
+#include <iostream>
 #include <fstream> 
 #include <vector>
 #include <string>
@@ -14,9 +14,7 @@ int main() {
     string playerClass, playerName;
 
     // initial variables - enemies
-    int enemy1Health, enemy1Gold, enemy1Status, enemy1Defense, enemy1Attack;
-    int enemy2Health, enemy2Gold, enemy2Status, enemy2Defense, enemy2Attack;
-    int enemy3Health, enemy3Gold, enemy3Status, enemy3Defense, enemy3Attack;
+    int enemyHealth, enemyGold, enemyStatus, enemyDefense, enemyAttack;
 
     // player name input
     cout << "Please enter your name: ";
