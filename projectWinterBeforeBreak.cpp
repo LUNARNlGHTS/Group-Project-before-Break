@@ -7,10 +7,16 @@
 #include <ctime>
 #include <cmath>
 
+#include <random>
+=======
+
+
 using namespace std;
 
 int main() {
 
+
+=======
     // initial variables - player
     int playerHealth, playerGold, playerStatus, playerDefense, playerAttack;
     string playerClass;
@@ -31,6 +37,7 @@ int main() {
     // assuming general combat code would be here, cycling 3 enemies before going to the shop
 
     // shop code would be here, then combat would repeat same with shop every 3 rounds
+
  
     
 }
