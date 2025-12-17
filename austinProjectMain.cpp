@@ -47,7 +47,7 @@ int main() {
 
             // specifying
             playerHealth = 100;
-            playerAttack = 12;
+            playerAttack = 13;
             playerDefense = 10;
 
             // info
@@ -68,24 +68,58 @@ int main() {
 
             }
 
+        } else if (playerClass == 2) {
+
+            // specifying
+            playerHealth = 90;
+            playerAttack = 22;
+            playerDefense = 5;
+
+            // info
+            cout << "The Wizard has a high attack power, but lower defense power compared to other characters." << endl;
+            cout << "Health:  " << playerHealth << endl;
+            cout << "Attack:  " << playerAttack << endl;
+            cout << "Defense: \n" << playerDefense << endl;
+
+            cout << "[1] - Select             [0] - Return" << endl;
+            cout << "Selection: ";
+            cin >> playerClassInfoSelection;
+
+            if (playerClassInfoSelection == 1) {
+
+                menuStatus = false;
+                shopStatus = false;
+                fightStatus = true;
+
+            }
+
+        } else if (playerClass == 3) {
+
+            // specifying
+            playerHealth = 120;
+            playerAttack = 8;
+            playerDefense = 18;
+
+            // info
+            cout << "The Knight is a brute, who has high defense and health, although having a lower attack." << endl;
+            cout << "Health:  " << playerHealth << endl;
+            cout << "Attack:  " << playerAttack << endl;
+            cout << "Defense: \n" << playerDefense << endl;
+
+            cout << "[1] - Select             [0] - Return" << endl;
+            cout << "Selection: ";
+            cin >> playerClassInfoSelection;
+
+            if (playerClassInfoSelection == 1) {
+
+                menuStatus = false;
+                shopStatus = false;
+                fightStatus = true;
+
+            }
+
         }
-        /*
-    if(playerClass == "Wizard"){
-        playerHealth = 90;
-        playerAttack = 15;
-        playerDefense = 5;
-    }
-    if(playerClass == "Knight"){
-        playerHealth = 120;
-        playerAttack = 15;
-        playerDefense = 20;
-    }
-    while (playerClass != "Adventurer" && playerClass != "Wizard" && playerClass != "Knight") {
-        cout << "Please choose a class: " << endl;
-        cout << "Input: ";
-        cin >> playerClass;
-    }
-    */
+        
 }
     // declaring things for fighting (MUST be active for the thing function)
     playerHasInput = false;
