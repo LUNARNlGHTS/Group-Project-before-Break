@@ -7,18 +7,15 @@
 #include <ctime>
 #include <cmath>
 #include <thread>
-
 #include <random>
-=======
 
 // for waiting, and standard specifications
-
 using namespace std::this_thread;
 using namespace std::chrono;
 using namespace std;
 
 int main() {
-
+    
     // initial variables - player
     int playerHealth, playerGold, playerStatus, playerDefense, playerAttack, playerClass, playerClassInfoSelection;
     string playerName;
@@ -58,13 +55,18 @@ int main() {
             cout << "The Adventurer has mainly average stats, being useful in many categories." << endl;
             cout << "Health:  " << playerHealth << endl;
             cout << "Attack:  " << playerAttack << endl;
-            cout << "Defense: \n" << playerDefense << endl;
+            cout << "Defense: " << playerDefense << "\n" << endl;
 
             cout << "[1] - Select             [0] - Return" << endl;
             cout << "Selection: ";
             cin >> playerClassInfoSelection;
 
             if (playerClassInfoSelection == 1) {
+                
+                cout << "\n\n\n\n\n\n" << endl;
+                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
+                cout << "Adventurer ";
+                cin >> playerName;
 
                 menuStatus = false;
                 shopStatus = false;
@@ -83,13 +85,18 @@ int main() {
             cout << "The Wizard has a high attack power, but lower defense power compared to other characters." << endl;
             cout << "Health:  " << playerHealth << endl;
             cout << "Attack:  " << playerAttack << endl;
-            cout << "Defense: \n" << playerDefense << endl;
+            cout << "Defense: " << playerDefense << "\n" << endl;
 
             cout << "[1] - Select             [0] - Return" << endl;
             cout << "Selection: ";
             cin >> playerClassInfoSelection;
 
             if (playerClassInfoSelection == 1) {
+
+                cout << "\n\n\n\n\n\n" << endl;
+                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
+                cout << "Wizard ";
+                cin >> playerName;
 
                 menuStatus = false;
                 shopStatus = false;
@@ -108,13 +115,18 @@ int main() {
             cout << "The Knight is a brute, who has high defense and health, although having a lower attack." << endl;
             cout << "Health:  " << playerHealth << endl;
             cout << "Attack:  " << playerAttack << endl;
-            cout << "Defense: \n" << playerDefense << endl;
+            cout << "Defense: " << playerDefense << "\n" << endl;
 
             cout << "[1] - Select             [0] - Return" << endl;
             cout << "Selection: ";
             cin >> playerClassInfoSelection;
 
             if (playerClassInfoSelection == 1) {
+
+                cout << "\n\n\n\n\n\n" << endl;
+                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
+                cout << "Knight ";
+                cin >> playerName;
 
                 menuStatus = false;
                 shopStatus = false;
@@ -171,18 +183,18 @@ int main() {
 
         }
         while (currentPlayerSelection == 2) {
-
+            
         }
         while (currentPlayerSelection == 3) {
 
-            cout << "Current enemies stats" << endl;
+            cout << "Stats of the current enemy" << endl;
             cout << "Health:  " << enemyHealth << endl;
             cout << "Attack:  " << enemyAttack << endl;
             cout << "Defense: " << enemyDefense << endl;
             cout << "Status:  " << enemyStatus << endl;
-            sleep_for(seconds(5));
-            playerHasInput = true;
-            currentPlayerSelection = 0;
+            cout << "\n[0] - Quit" << endl;
+            cout << "Selection: ";
+            cin >> currentPlayerSelection;
 
         }
     }
