@@ -1,4 +1,4 @@
-#include <iostream>
+\#include <iostream>
 #include <fstream> 
 #include <vector>
 #include <string>
@@ -9,7 +9,8 @@ using namespace std;
 int main() {
 
     // initial variables - player
-    int playerHealth, playerGold, playerStatus, playerDefense, playerAttack;
+    int playerHealth, playerStatus, playerDefense, playerAttack;
+    int playerGold = 10;
     string playerClass, playerName;
 
     // initial variables - enemies
