@@ -43,6 +43,7 @@ int main() {
         cout << "Please choose a class (Case sensitive)";
         cin >> playerClass;
     }
+    cout << "Welcome " << playerName << " " << "to Half-Life 3!";
 
 
 
