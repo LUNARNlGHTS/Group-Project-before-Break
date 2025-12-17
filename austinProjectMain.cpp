@@ -7,7 +7,12 @@
 #include <ctime>
 #include <cmath>
 #include <thread>
+
 #include <random>
+=======
+
+// for waiting, and standard specifications
+
 using namespace std::this_thread;
 using namespace std::chrono;
 using namespace std;
@@ -15,23 +20,118 @@ using namespace std;
 int main() {
 
     // initial variables - player
-    int playerHealth, playerGold, playerStatus, playerDefense, playerAttack;
-    string playerClass, playerName;
+    int playerHealth, playerGold, playerStatus, playerDefense, playerAttack, playerClass, playerClassInfoSelection;
+    string playerName;
 
     // initial variables - enemies
     int enemyHealth, enemyGold, enemyStatus, enemyDefense, enemyAttack;
 
     // initial variables - checks
     bool menuStatus, shopStatus, fightStatus, playerHasInput;
+    menuStatus = true;
+    playerClassInfoSelection = 0;
 
     // variables for main fight section
-    int currentPlayerSelection, currentPlayerItemSelection, damageDealtPlayer, damageDealtEnemy;
+    int currentPlayerSelection, damageDealtPlayer, damageDealtEnemy;
     currentPlayerSelection = 0;
+    
+    while (menuStatus == true && playerClassInfoSelection == 0) {
+        cout << "\n\n\n\n\n\n" << endl;
+
+        // main prompting
+        cout << "What class would you like to play?\nEach has unique stats that are viewed upon selecting one." << endl;
+        cout << "[1] - Adventurer       [2] - Wizard" << endl;
+        cout << "[3] - Knight" << endl;
+        cout << "Selection: ";
+        cin >> playerClass;
+        
+        cout << "\n\n\n\n\n\n" << endl;
+
+        if (playerClass == 1) {
+
+            // specifying
+            playerHealth = 100;
+            playerAttack = 13;
+            playerDefense = 10;
+
+            // info
+            cout << "The Adventurer has mainly average stats, being useful in many categories." << endl;
+            cout << "Health:  " << playerHealth << endl;
+            cout << "Attack:  " << playerAttack << endl;
+            cout << "Defense: \n" << playerDefense << endl;
+
+            cout << "[1] - Select             [0] - Return" << endl;
+            cout << "Selection: ";
+            cin >> playerClassInfoSelection;
+
+            if (playerClassInfoSelection == 1) {
+
+                menuStatus = false;
+                shopStatus = false;
+                fightStatus = true;
+
+            }
+
+        } else if (playerClass == 2) {
+
+            // specifying
+            playerHealth = 90;
+            playerAttack = 22;
+            playerDefense = 5;
+
+            // info
+            cout << "The Wizard has a high attack power, but lower defense power compared to other characters." << endl;
+            cout << "Health:  " << playerHealth << endl;
+            cout << "Attack:  " << playerAttack << endl;
+            cout << "Defense: \n" << playerDefense << endl;
+
+            cout << "[1] - Select             [0] - Return" << endl;
+            cout << "Selection: ";
+            cin >> playerClassInfoSelection;
+
+            if (playerClassInfoSelection == 1) {
+
+                menuStatus = false;
+                shopStatus = false;
+                fightStatus = true;
+
+            }
+
+        } else if (playerClass == 3) {
+
+            // specifying
+            playerHealth = 120;
+            playerAttack = 8;
+            playerDefense = 18;
+
+            // info
+            cout << "The Knight is a brute, who has high defense and health, although having a lower attack." << endl;
+            cout << "Health:  " << playerHealth << endl;
+            cout << "Attack:  " << playerAttack << endl;
+            cout << "Defense: \n" << playerDefense << endl;
+
+            cout << "[1] - Select             [0] - Return" << endl;
+            cout << "Selection: ";
+            cin >> playerClassInfoSelection;
+
+            if (playerClassInfoSelection == 1) {
+
+                menuStatus = false;
+                shopStatus = false;
+                fightStatus = true;
+
+            }
+
+        }
+        
+}
+    // declaring things for fighting (MUST be active for the thing function)
     playerHasInput = false;
     shopStatus = false;
     menuStatus = false;
 
     while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false) {
+
         fightStatus = true;
         cout << "\n\n\n\n\n\n" << endl; // both of these are for new line padding, looks better
 
@@ -51,7 +151,7 @@ int main() {
 
             // main battle scene & input
             cout << "An enemy appears! What will you do?" << endl;
-            cout << "[1] - Fight            [2] - Item" << endl;
+            cout << "[1] - Fight            [2] - Gamble" << endl;
             cout << "[3] - Inspect          [4] - Defend" << endl;
             cout << "Selection: ";
             cin >> currentPlayerSelection;
@@ -80,7 +180,7 @@ int main() {
             cout << "Attack:  " << enemyAttack << endl;
             cout << "Defense: " << enemyDefense << endl;
             cout << "Status:  " << enemyStatus << endl;
-            sleep_for(seconds(8));
+            sleep_for(seconds(5));
             playerHasInput = true;
             currentPlayerSelection = 0;
 
