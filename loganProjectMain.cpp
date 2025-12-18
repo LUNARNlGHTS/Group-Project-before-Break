@@ -1,3 +1,7 @@
+/*Still need a working looping menu that has the options ot start a new adventure then lead to 
+character select or exit the program. Add a counter of some sorts maybe a total rounds cleared or
+enemies beaten. Add data validation to every user input with while loops*/
+
 #include <iostream>
 #include <fstream> 
 #include <vector>
@@ -8,6 +12,7 @@
 #include <cmath>
 #include <thread>
 #include <random>
+
 using namespace std::this_thread;
 using namespace std::chrono;
 using namespace std;
@@ -227,12 +232,12 @@ int main() {
    }
 
     cout << "Welcome to the shop what would you like to buy" << endl;
-    cout << "1. " << shopOpt1 + " $" << shopPrice1 << " 2. " << shopOpt2 << " $" << shopPrice2 << endl;
+    cout << "1. " << shopOpt1 << " $" << shopPrice1 << " 2. " << shopOpt2 << " $" << shopPrice2 << endl;
     cout << "3. " << shopOpt3 << " $" << shopPrice3 << " 4. Leave" << endl;
     cin >> shopChoice;
     while (shopChoice < 1 || shopChoice > 4){
       cout << "Please enter a valid choice" << endl;
-      cout << "1. " << shopOpt1 + " $" << shopPrice1 << " 2. " << shopOpt2 << " $" << shopPrice2  << endl;
+      cout << "1. " << shopOpt1 << " $" << shopPrice1 << " 2. " << shopOpt2 << " $" << shopPrice2  << endl;
       cout << "3. " << shopOpt3 << " $" << shopPrice3 << " 4. Leave" << endl;
       cin >> shopChoice; 
     }
