@@ -29,7 +29,7 @@ int main() {
     playerClassInfoSelection = 0;
 
     // variables for main fight section
-    int currentPlayerSelection, damageDealtPlayer, damageDealtEnemy, powerStrikeTurn, totalRounds;
+    int currentPlayerSelection, damageDealtPlayer, damageDealtEnemy, powerStrikeTurn, totalRounds, playerGameOverSelection;
     currentPlayerSelection = 0;
     powerStrikeTurn = 0;
     
@@ -74,7 +74,9 @@ int main() {
                 fightStatus = true;
 
             } else {
+                
                 playerClassInfoSelection = 0;
+                
             }
 
         } else if (playerClass == 2) {
@@ -149,6 +151,7 @@ int main() {
     playerHasInput = false;
     shopStatus = false;
     menuStatus = false;
+    fightStatus = true;
     totalRounds = 1;
 
     // inital enemy creation, gets effected per each round progressed
@@ -158,12 +161,51 @@ int main() {
     enemyAttack = baseEnemyAttack;
     enemyHealth = baseEnemyHealth;
     enemyDefense = baseEnemyDefense;
+    
+    // initial setting of base player stats (for when dying to reset properly)
+    int basePlayerAttack = playerAttack;
+    int basePlayerHealth = playerHealth;
+    int basePlayerDefense = playerDefense;
 
-
-    while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false) {
+    while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false && fightStatus == true) {
 
         fightStatus = true;
         cout << "\n\n\n\n\n\n" << endl; // both of these are for new line padding, looks better
+
+        if (playerHealth <= 0) {
+            
+            cout << "You collapsed..." << endl;
+            cout << "\n[1] - Retry            [0] - Menu" << endl; // menu is super mega unfinished it doesnt function
+            cout << "Selection: ";
+            cin >> playerGameOverSelection;
+            cout << "\n\n\n\n\n\n" << endl;
+            
+            if (playerGameOverSelection == 1) {
+                
+                // gamerule resetting
+                totalRounds = 1;
+                playerHasInput = false;
+                shopStatus = false;
+                menuStatus = false;
+                
+                // enemy resetting
+                enemyAttack = baseEnemyAttack;
+                enemyHealth = baseEnemyHealth;
+                enemyDefense = baseEnemyDefense;
+                
+                // player resetting
+                playerAttack = basePlayerAttack;
+                playerHealth = basePlayerHealth;
+                playerDefense = basePlayerDefense;
+                
+            } else if (playerGameOverSelection == 0) {
+                
+                menuStatus = true;
+                fightStatus = false;
+                
+            }
+            
+        }
 
         if (enemyHealth <= 0) {
 
