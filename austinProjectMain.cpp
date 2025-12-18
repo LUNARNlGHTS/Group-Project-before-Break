@@ -29,8 +29,9 @@ int main() {
     playerClassInfoSelection = 0;
 
     // variables for main fight section
-    int currentPlayerSelection, damageDealtPlayer, damageDealtEnemy;
+    int currentPlayerSelection, damageDealtPlayer, damageDealtEnemy, powerStrikeTurn, totalRounds;
     currentPlayerSelection = 0;
+    powerStrikeTurn = 0;
     
     while (menuStatus == true && playerClassInfoSelection == 0) {
         cout << "\n\n\n\n\n\n" << endl;
@@ -72,6 +73,8 @@ int main() {
                 shopStatus = false;
                 fightStatus = true;
 
+            } else {
+                playerClassInfoSelection = 0;
             }
 
         } else if (playerClass == 2) {
@@ -102,6 +105,8 @@ int main() {
                 shopStatus = false;
                 fightStatus = true;
 
+            } else {
+                playerClassInfoSelection = 0;
             }
 
         } else if (playerClass == 3) {
@@ -132,38 +137,72 @@ int main() {
                 shopStatus = false;
                 fightStatus = true;
 
+            } else {
+                playerClassInfoSelection = 0;
             }
 
         }
         
 }
+
     // declaring things for fighting (MUST be active for the thing function)
     playerHasInput = false;
     shopStatus = false;
     menuStatus = false;
+    totalRounds = 1;
+
+    // inital enemy creation, gets effected per each round progressed
+    int baseEnemyAttack = 10;
+    int baseEnemyHealth = 35;
+    int baseEnemyDefense = 3;
+    enemyAttack = baseEnemyAttack;
+    enemyHealth = baseEnemyHealth;
+    enemyDefense = baseEnemyDefense;
+
 
     while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false) {
 
         fightStatus = true;
         cout << "\n\n\n\n\n\n" << endl; // both of these are for new line padding, looks better
 
+        if (enemyHealth <= 0) {
+
+            totalRounds = totalRounds + 1;
+
+            cout << "You defeated the enemy! Another one approaches..." << endl;
+            powerStrikeTurn = powerStrikeTurn + 1;
+            sleep_for(seconds(3));
+            cout << "\n\n\n\n\n\n";
+
+            enemyAttack = baseEnemyAttack * pow(1.1, totalRounds);
+            enemyHealth = baseEnemyHealth * pow(1.1, totalRounds);
+            enemyDefense = baseEnemyDefense * pow(1.1, totalRounds);
+
+            playerHasInput = false;
+            currentPlayerSelection = 0;
+
+        }
+
         if (playerHasInput == true) {
 
             while (playerHasInput == true) {
 
-                enemyAttack = damageDealtEnemy;
+                damageDealtEnemy = enemyAttack;
+                playerHealth = playerHealth - damageDealtEnemy;
                 cout << "You took " << damageDealtEnemy << " points of damage!" << endl;
                 sleep_for(seconds(1));
                 currentPlayerSelection = 0;
                 playerHasInput = false;
+                powerStrikeTurn = powerStrikeTurn + 1;
 
             }
 
         } else if (playerHasInput == false) {
 
             // main battle scene & input
+            cout << "HP: " << playerHealth << "  ATK: " << playerAttack << "  DEF: " << playerDefense << "  ROUND: " << totalRounds << endl;
             cout << "An enemy appears! What will you do?" << endl;
-            cout << "[1] - Fight            [2] - Gamble" << endl;
+            cout << "[1] - Fight            [2] - Power Strike" << endl;
             cout << "[3] - Inspect          [4] - Defend" << endl;
             cout << "Selection: ";
             cin >> currentPlayerSelection;
@@ -175,7 +214,8 @@ int main() {
         while (currentPlayerSelection == 1 && playerHasInput == false) {
 
             // player attacking
-            playerAttack = damageDealtPlayer;
+            damageDealtPlayer = playerAttack;
+            enemyHealth = enemyHealth - damageDealtPlayer;
             cout << damageDealtPlayer << " damage was done to the enemy!" << endl;
             sleep_for(seconds(1));
             playerHasInput = true;
@@ -183,9 +223,49 @@ int main() {
 
         }
         while (currentPlayerSelection == 2) {
+
+            if (powerStrikeTurn >= 3) {
+
+                // power strike attacking
+                damageDealtPlayer = playerAttack;
+                damageDealtPlayer = damageDealtPlayer * 3;
+                enemyHealth = enemyHealth - damageDealtPlayer;
+                cout << "A power strike of " << damageDealtPlayer << " damage was done to the enemy!!" << endl;
+                sleep_for(seconds(1));
+
+                // resetting
+                powerStrikeTurn = powerStrikeTurn - 4;
+                damageDealtPlayer = playerAttack;
+                playerHasInput = true;
+                currentPlayerSelection = 0;
+
+            } else if (powerStrikeTurn <= 2) {
+
+                // if player hasn't charged power strike for 3 rounds
+                cout << "You need to charge your power strike for 3 rounds (currently " << powerStrikeTurn << ") in order to power strike!" << endl;
+                cout << "\n[0] - Quit" << endl;
+                cout << "Selection: ";
+                cin >> currentPlayerSelection;
+
+            }
             
         }
+
         while (currentPlayerSelection == 3) {
+
+            // stat displaying
+            cout << "Stats of the current enemy" << endl;
+            cout << "HP:  " << enemyHealth << endl;
+            cout << "ATK:  " << enemyAttack << endl;
+            cout << "DEF: " << enemyDefense << endl;
+            cout << "STATUS:  " << enemyStatus << endl;
+            cout << "\n[0] - Quit" << endl;
+            cout << "Selection: ";
+            cin >> currentPlayerSelection;
+
+        }
+
+        while (currentPlayerSelection == 4) {
 
             cout << "Stats of the current enemy" << endl;
             cout << "Health:  " << enemyHealth << endl;
@@ -197,6 +277,13 @@ int main() {
             cin >> currentPlayerSelection;
 
         }
+
+        while (currentPlayerSelection >= 5) {
+
+            currentPlayerSelection = 0;
+
+        }
+
     }
 
 }
