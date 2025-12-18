@@ -16,6 +16,11 @@ using namespace std;
 
 int main() {
     
+    // for game restarting
+    bool gameRunning = true;
+
+    while (gameRunning) {
+    
     // initial variables - player
     int playerHealth, playerGold, playerStatus, playerDefense, playerAttack, playerClass, playerClassInfoSelection;
     string playerName;
@@ -32,6 +37,12 @@ int main() {
     int currentPlayerSelection, damageDealtPlayer, damageDealtEnemy, powerStrikeTurn, totalRounds, playerGameOverSelection;
     currentPlayerSelection = 0;
     powerStrikeTurn = 0;
+
+    ////////////////////////////
+    //   MAIN CLASS SECTION   //
+    ////////////////////////////
+    
+
     
     while (menuStatus == true && playerClassInfoSelection == 0) {
         cout << "\n\n\n\n\n\n" << endl;
@@ -145,7 +156,11 @@ int main() {
 
         }
         
-}
+    }
+
+    /////////////////////////////
+    //  MAIN FIGHTING SECTION  //
+    /////////////////////////////
 
     // declaring things for fighting (MUST be active for the thing function)
     playerHasInput = false;
@@ -174,8 +189,8 @@ int main() {
 
         if (playerHealth <= 0) {
             
-            cout << "You collapsed..." << endl;
-            cout << "\n[1] - Retry            [0] - Menu" << endl; // menu is super mega unfinished it doesnt function
+            cout << "\033[31mYou collapsed...\033[37m" << endl;
+            cout << "\n[1] - Retry            [0] - Menu" << endl;
             cout << "Selection: ";
             cin >> playerGameOverSelection;
             cout << "\n\n\n\n\n\n" << endl;
@@ -187,6 +202,7 @@ int main() {
                 playerHasInput = false;
                 shopStatus = false;
                 menuStatus = false;
+                playerClassInfoSelection = 0;
                 
                 // enemy resetting
                 enemyAttack = baseEnemyAttack;
@@ -200,8 +216,17 @@ int main() {
                 
             } else if (playerGameOverSelection == 0) {
                 
+                // status resetting
                 menuStatus = true;
                 fightStatus = false;
+                shopStatus = false;
+
+                // player input resetting
+                playerClassInfoSelection = 0;
+                currentPlayerSelection = 0;
+                playerHasInput = false;
+
+                continue;
                 
             }
             
@@ -242,12 +267,45 @@ int main() {
         } else if (playerHasInput == false) {
 
             // main battle scene & input
-            cout << "HP: " << playerHealth << "  ATK: " << playerAttack << "  DEF: " << playerDefense << "  ROUND: " << totalRounds << endl;
-            cout << "An enemy appears! What will you do?" << endl;
-            cout << "[1] - Fight            [2] - Power Strike" << endl;
-            cout << "[3] - Inspect          [4] - Defend" << endl;
-            cout << "Selection: ";
-            cin >> currentPlayerSelection;
+            
+            // checking if health should appear red
+            if (playerHealth <= 25) { 
+                
+                cout << "HP: \033[31m" << playerHealth 
+                << "\033[37m  ATK: " << playerAttack 
+                << "  DEF: " << playerDefense 
+                << "  ROUND: " << totalRounds 
+                << endl;
+                
+            } else {
+                
+                cout << "HP: " << playerHealth 
+                << "  ATK: " << playerAttack 
+                << "  DEF: " << playerDefense 
+                << "  ROUND: " << totalRounds 
+                << endl;
+                
+            }
+            
+            // checking if power strike should appear yellow
+            if (powerStrikeTurn >= 3) {
+                
+                cout << "An enemy appears! What will you do?" << endl;
+                cout << "[1] - Fight            \033[33m[2] - Power Strike\033[37m" << endl;
+                cout << "[3] - Inspect          [4] - Defend" << endl;
+                cout << "Selection: ";
+                cin >> currentPlayerSelection;
+                
+            } else {
+                
+                cout << "An enemy appears! What will you do?" << endl;
+                cout << "[1] - Fight            [2] - Power Strike" << endl;
+                cout << "[3] - Inspect          [4] - Defend" << endl;
+                cout << "Selection: ";
+                cin >> currentPlayerSelection;
+                
+            }
+            
 
         }
 
@@ -326,6 +384,8 @@ int main() {
 
         }
 
+    }
+    
     }
 
 }
