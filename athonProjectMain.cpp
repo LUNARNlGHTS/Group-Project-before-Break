@@ -217,6 +217,8 @@ int main() {
     int basePlayerAttack = playerAttack;
     int basePlayerHealth = playerHealth;
     int basePlayerDefense = playerDefense;
+    //Random event
+    int randomEvent;
 
     while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false && fightStatus == true && characterSelectStatus == false) {
 
