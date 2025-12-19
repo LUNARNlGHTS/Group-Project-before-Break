@@ -1,6 +1,6 @@
 /*Still need a working looping menu that has the options ot start a new adventure then lead to 
 character select or exit the program.*/
-
+// fix the bugs bro
 #include <iostream>
 #include <fstream> 
 #include <vector>
@@ -18,7 +18,12 @@ using namespace std;
 
 int main() {
 
-     // initial variables - player
+    // for game restarting
+    bool gameRunning = true;
+
+    while (gameRunning) {
+    
+    // initial variables - player
     int playerHealth, playerGold, playerStatus, playerDefense, playerAttack, playerClass, playerClassInfoSelection;
     string playerName;
 
@@ -26,16 +31,45 @@ int main() {
     int enemyHealth, enemyGold, enemyStatus, enemyDefense, enemyAttack;
 
     // initial variables - checks
-    bool menuStatus, shopStatus, fightStatus, playerHasInput;
+    bool menuStatus, characterSelectStatus, shopStatus, fightStatus, playerHasInput;
     menuStatus = true;
     playerClassInfoSelection = 0;
 
     // variables for main fight section
-    int currentPlayerSelection, damageDealtPlayer, damageDealtEnemy, powerStrikeTurn, totalRounds;
+    int menuSelection, currentPlayerSelection, damageDealtPlayer, damageDealtEnemy, powerStrikeTurn, totalRounds, playerGameOverSelection;
     currentPlayerSelection = 0;
     powerStrikeTurn = 0;
+
+    ////////////////////////////
+    //   MAIN CLASS SECTION   //
+    ////////////////////////////
     
-    while (menuStatus == true && playerClassInfoSelection == 0) {
+   while (menuStatus == true) {
+
+      while (menuSelection > 2 || menuSelection < 1) {
+         cout << "\n\n\n\n\n\n" << endl;
+
+         cout << "Half Life 3" << endl;
+         cout << "\n" << endl;
+         cout << "[1] - Start Adventure" << endl;
+         cout << "[2] - Exit" << endl;
+         cout << "Selection: ";
+         cin >> menuSelection;
+      }
+      if (menuSelection == 1) {
+
+         menuStatus = false;
+         characterSelectStatus = true;
+
+      } else {
+
+         gameRunning = false;
+         return 0;
+
+      }
+   }
+    
+    while (characterSelectStatus == true && playerClassInfoSelection == 0) {
         cout << "\n\n\n\n\n\n" << endl;
 
         // main prompting
@@ -71,12 +105,14 @@ int main() {
                 cout << "Adventurer ";
                 cin >> playerName;
 
-                menuStatus = false;
+                characterSelectStatus = false;
                 shopStatus = false;
                 fightStatus = true;
 
             } else {
+                
                 playerClassInfoSelection = 0;
+                
             }
 
         } else if (playerClass == 2) {
@@ -103,7 +139,7 @@ int main() {
                 cout << "Wizard ";
                 cin >> playerName;
 
-                menuStatus = false;
+                characterSelectStatus = false;
                 shopStatus = false;
                 fightStatus = true;
 
@@ -135,7 +171,7 @@ int main() {
                 cout << "Knight ";
                 cin >> playerName;
 
-                menuStatus = false;
+                characterSelectStatus = false;
                 shopStatus = false;
                 fightStatus = true;
 
@@ -145,27 +181,85 @@ int main() {
 
         }
         
-}
+    }
+
+    /////////////////////////////
+    //  MAIN FIGHTING SECTION  //
+    /////////////////////////////
 
     // declaring things for fighting (MUST be active for the thing function)
     playerHasInput = false;
     shopStatus = false;
     menuStatus = false;
+    characterSelectStatus = false;
+    fightStatus = true;
     totalRounds = 1;
 
     // inital enemy creation, gets effected per each round progressed
-    int baseEnemyAttack = 10;
+    int baseEnemyAttack = 10000;
     int baseEnemyHealth = 35;
     int baseEnemyDefense = 3;
     enemyAttack = baseEnemyAttack;
     enemyHealth = baseEnemyHealth;
     enemyDefense = baseEnemyDefense;
+    
+    // initial setting of base player stats (for when dying to reset properly)
+    int basePlayerAttack = playerAttack;
+    int basePlayerHealth = playerHealth;
+    int basePlayerDefense = playerDefense;
 
-
-    while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false) {
+    while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false && fightStatus == true && characterSelectStatus == false) {
 
         fightStatus = true;
         cout << "\n\n\n\n\n\n" << endl; // both of these are for new line padding, looks better
+
+        if (playerHealth <= 0) {
+            
+            cout << "\033[31mYou collapsed...\033[37m" << endl;
+            cout << "\n[1] - Retry            [0] - Menu" << endl;
+            cout << "Selection: ";
+            cin >> playerGameOverSelection;
+            cout << "\n\n\n\n\n\n" << endl;
+            
+            if (playerGameOverSelection == 1) {
+                
+                // gamerule resetting
+                totalRounds = 1;
+                playerHasInput = false;
+                shopStatus = false;
+                menuStatus = false;
+                characterSelectStatus = false;
+                playerClassInfoSelection = 0;
+                
+                // enemy resetting
+                enemyAttack = baseEnemyAttack;
+                enemyHealth = baseEnemyHealth;
+                enemyDefense = baseEnemyDefense;
+                
+                // player resetting
+                playerAttack = basePlayerAttack;
+                playerHealth = basePlayerHealth;
+                playerDefense = basePlayerDefense;
+                
+            } else if (playerGameOverSelection == 0) {
+                
+                // status resetting
+                menuStatus = true;
+                characterSelectStatus = false;
+                fightStatus = false;
+                shopStatus = false;
+                menuSelection = 0;
+
+                // player input resetting
+                playerClassInfoSelection = 0;
+                currentPlayerSelection = 0;
+                playerHasInput = false;
+
+                continue;
+                
+            }
+            
+        }
 
         if (enemyHealth <= 0) {
 
@@ -202,12 +296,45 @@ int main() {
         } else if (playerHasInput == false) {
 
             // main battle scene & input
-            cout << "HP: " << playerHealth << "  ATK: " << playerAttack << "  DEF: " << playerDefense << "  ROUND: " << totalRounds << endl;
-            cout << "An enemy appears! What will you do?" << endl;
-            cout << "[1] - Fight            [2] - Power Strike" << endl;
-            cout << "[3] - Inspect          [4] - Defend" << endl;
-            cout << "Selection: ";
-            cin >> currentPlayerSelection;
+            
+            // checking if health should appear red
+            if (playerHealth <= 25) { 
+                
+                cout << "HP: \033[31m" << playerHealth 
+                << "\033[37m  ATK: " << playerAttack 
+                << "  DEF: " << playerDefense 
+                << "  ROUND: " << totalRounds 
+                << endl;
+                
+            } else {
+                
+                cout << "HP: " << playerHealth 
+                << "  ATK: " << playerAttack 
+                << "  DEF: " << playerDefense 
+                << "  ROUND: " << totalRounds 
+                << endl;
+                
+            }
+            
+            // checking if power strike should appear yellow
+            if (powerStrikeTurn >= 3) {
+                
+                cout << "An enemy appears! What will you do?" << endl;
+                cout << "[1] - Fight            \033[33m[2] - Power Strike\033[37m" << endl;
+                cout << "[3] - Inspect          [4] - Defend" << endl;
+                cout << "Selection: ";
+                cin >> currentPlayerSelection;
+                
+            } else {
+                
+                cout << "An enemy appears! What will you do?" << endl;
+                cout << "[1] - Fight            [2] - Power Strike" << endl;
+                cout << "[3] - Inspect          [4] - Defend" << endl;
+                cout << "Selection: ";
+                cin >> currentPlayerSelection;
+                
+            }
+            
 
         }
 
@@ -286,10 +413,12 @@ int main() {
 
         }
 
+
+      
     }
-
-
-
+    
+    
+    
 
    
    string shopOpt1, shopOpt2, shopOpt3;
@@ -459,3 +588,5 @@ int main() {
    }
 
 }
+}
+
