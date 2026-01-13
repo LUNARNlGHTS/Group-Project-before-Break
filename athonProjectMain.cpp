@@ -1,3 +1,6 @@
+/*Still need a working looping menu that has the options ot start a new adventure then lead to 
+character select or exit the program.*/
+// fix the bugs bro
 #include <iostream>
 #include <fstream> 
 #include <vector>
@@ -14,10 +17,6 @@ using namespace std::chrono;
 using namespace std;
 
 int main() {
-
-    ////////////////////////////
-    //   VAR / INIT SECTION   //
-    ////////////////////////////
 
     // for game restarting
     bool gameRunning = true;
@@ -41,26 +40,22 @@ int main() {
     currentPlayerSelection = 0;
     powerStrikeTurn = 0;
 
-    ///////////////////////////
-    //   MAIN MENU SECTION   //
-    ///////////////////////////
+    ////////////////////////////
+    //   MAIN CLASS SECTION   //
+    ////////////////////////////
     
    while (menuStatus == true) {
 
       while (menuSelection > 2 || menuSelection < 1) {
-
          cout << "\n\n\n\n\n\n" << endl;
 
-         // main menu printing
          cout << "Half Life 3" << endl;
          cout << "\n" << endl;
          cout << "[1] - Start Adventure" << endl;
          cout << "[2] - Exit" << endl;
          cout << "Selection: ";
          cin >> menuSelection;
-
       }
-
       if (menuSelection == 1) {
 
          menuStatus = false;
@@ -72,12 +67,7 @@ int main() {
          return 0;
 
       }
-
    }
-
-    ////////////////////////////
-    //   MAIN CLASS SECTION   //
-    ////////////////////////////
     
     while (characterSelectStatus == true && playerClassInfoSelection == 0) {
         cout << "\n\n\n\n\n\n" << endl;
@@ -217,8 +207,6 @@ int main() {
     int basePlayerAttack = playerAttack;
     int basePlayerHealth = playerHealth;
     int basePlayerDefense = playerDefense;
-    //Random event
-    int randomEvent;
 
     while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false && fightStatus == true && characterSelectStatus == false) {
 
@@ -424,42 +412,40 @@ int main() {
             currentPlayerSelection = 0;
 
         }
+
+
       
     }
     
-    ///////////////////////////
-    //   MAIN SHOP SECTION   //
-    ///////////////////////////
     
-    // shop selection options
-    string shopOpt1, shopOpt2, shopOpt3;
+    
 
-    // shop items
-    string shopItem1 = "Health Potion: Heals 20 HP";
-    string shopItem2 = "Mega Health Potion: Heals 50 HP";
-    string shopItem3 = "Dull Sword: Increases ATK by 3";
-    string shopItem4 = "Crowbar: Increases ATK by 10";
-    string shopItem5 = "Wooden Shield: Increases DEF by 3";
-    string shopItem6 = "Iron Shield: Increases DEF by 10";
+   
+   string shopOpt1, shopOpt2, shopOpt3;
 
-    // shop pricing
-    int shopPrice1;
-    int shopPrice2;
-    int shopPrice3;
+   string shopItem1 = "Health Potion: Heals 20 HP";
+   string shopItem2 = "Mega Health Potion: Heals 50 HP";
+   string shopItem3 = "Dull Sword: Increases ATK by 3";
+   string shopItem4 = "Crowbar: Increases ATK by 10";
+   string shopItem5 = "Wooden Shield: Increases DEF by 3";
+   string shopItem6 = "Iron Shield: Increases DEF by 10";
+   
 
-    // shop choosing
-    int shopChoice;
+   int shopPrice1;
+   int shopPrice2;
+   int shopPrice3;
 
-    // random elements for shopping
-    random_device rd;
-    mt19937 rng(rd()); 
-    uniform_int_distribution<int> uni(1, 100);
-    int randomInteger = uni(rng);
+   int shopChoice;
 
-    while (shopStatus == true) {
+   random_device rd;
+   mt19937 rng(rd()); 
+   uniform_int_distribution<int> uni(1, 100);
+   int randomInteger = uni(rng);
+
+   while (shopStatus == true){
       
-    // decide the three items going to be in the shop from a list of 8 items 2 to increase each stat and 2 health potions with two tiers for each stat and potion
-    for (int i = 0; i<3; i++) {
+    //decide the three items going to be in the shop from a list of 8 items 2 to increase each stat and 2 health potions with two tiers for each stat and potion
+   for(int i = 0; i<3; i++){
 
       if (i==0){
          if(randomInteger >= 90){
@@ -602,5 +588,4 @@ int main() {
    }
 
 }
-
 }
