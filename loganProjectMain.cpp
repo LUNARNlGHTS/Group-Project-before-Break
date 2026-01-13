@@ -21,7 +21,7 @@ int main() {
     // for game restarting
     bool gameRunning = true;
 
-    while (gameRunning) {
+    
     
     // initial variables - player
     int playerHealth, playerGold, playerStatus, playerDefense, playerAttack, playerClass, playerClassInfoSelection;
@@ -39,10 +39,12 @@ int main() {
     int menuSelection, currentPlayerSelection, damageDealtPlayer, damageDealtEnemy, powerStrikeTurn, totalRounds, playerGameOverSelection;
     currentPlayerSelection = 0;
     powerStrikeTurn = 0;
+    totalRounds = 1;
 
     ////////////////////////////
     //   MAIN CLASS SECTION   //
     ////////////////////////////
+   while (gameRunning) {
     
    while (menuStatus == true) {
 
@@ -87,6 +89,7 @@ int main() {
             playerHealth = 100;
             playerAttack = 13;
             playerDefense = 10;
+            playerGold = 19;
 
             // info
             cout << "The Adventurer has mainly average stats, being useful in many categories." << endl;
@@ -121,6 +124,7 @@ int main() {
             playerHealth = 90;
             playerAttack = 22;
             playerDefense = 5;
+            playerGold = 2;
 
             // info
             cout << "The Wizard has a high attack power, but lower defense power compared to other characters." << endl;
@@ -153,6 +157,7 @@ int main() {
             playerHealth = 120;
             playerAttack = 8;
             playerDefense = 18;
+            playerGold = 41;
 
             // info
             cout << "The Knight is a brute, who has high defense and health, although having a lower attack." << endl;
@@ -179,6 +184,8 @@ int main() {
                 playerClassInfoSelection = 0;
             }
 
+            totalRounds = 1;
+
         }
         
     }
@@ -193,10 +200,10 @@ int main() {
     menuStatus = false;
     characterSelectStatus = false;
     fightStatus = true;
-    totalRounds = 1;
+    
 
     // inital enemy creation, gets effected per each round progressed
-    int baseEnemyAttack = 10000;
+    int baseEnemyAttack = 10;
     int baseEnemyHealth = 35;
     int baseEnemyDefense = 3;
     enemyAttack = baseEnemyAttack;
@@ -212,7 +219,7 @@ int main() {
 
         fightStatus = true;
         cout << "\n\n\n\n\n\n" << endl; // both of these are for new line padding, looks better
-
+      
         if (playerHealth <= 0) {
             
             cout << "\033[31mYou collapsed...\033[37m" << endl;
@@ -265,7 +272,14 @@ int main() {
 
             totalRounds = totalRounds + 1;
 
+            if(totalRounds % 3 == 0){
+               fightStatus = false; 
+               shopStatus = true;
+               break;
+            }
+
             cout << "You defeated the enemy! Another one approaches..." << endl;
+            playerGold = playerGold + 10 * pow(1.25, totalRounds);
             powerStrikeTurn = powerStrikeTurn + 1;
             sleep_for(seconds(3));
             cout << "\n\n\n\n\n\n";
@@ -304,6 +318,7 @@ int main() {
                 << "\033[37m  ATK: " << playerAttack 
                 << "  DEF: " << playerDefense 
                 << "  ROUND: " << totalRounds 
+                << "  GOLD: " << playerGold 
                 << endl;
                 
             } else {
@@ -312,6 +327,7 @@ int main() {
                 << "  ATK: " << playerAttack 
                 << "  DEF: " << playerDefense 
                 << "  ROUND: " << totalRounds 
+                << "  GOLD: " << playerGold
                 << endl;
                 
             }
@@ -512,13 +528,13 @@ int main() {
    }
 
     cout << "Welcome to the shop what would you like to buy" << endl;
-    cout << "1. " << shopOpt1 << " $" << shopPrice1 << " 2. " << shopOpt2 << " $" << shopPrice2 << endl;
-    cout << "3. " << shopOpt3 << " $" << shopPrice3 << " 4. Leave" << endl;
+    cout << "1. " << shopOpt1 << " $" << shopPrice1 << endl << "2. " << shopOpt2 << " $" << shopPrice2 << endl;
+    cout << "3. " << shopOpt3 << " $" << shopPrice3 << endl << "4. Leave" << endl;
     cin >> shopChoice;
     while (shopChoice < 1 || shopChoice > 4){
       cout << "Please enter a valid choice" << endl;
-      cout << "1. " << shopOpt1 << " $" << shopPrice1 << " 2. " << shopOpt2 << " $" << shopPrice2  << endl;
-      cout << "3. " << shopOpt3 << " $" << shopPrice3 << " 4. Leave" << endl;
+      cout << "1. " << shopOpt1 << " $" << shopPrice1 << endl << "2. " << shopOpt2 << " $" << shopPrice2  << endl;
+      cout << "3. " << shopOpt3 << " $" << shopPrice3 << endl << "4. Leave" << endl;
       cin >> shopChoice; 
     }
     if (shopChoice == 1 && playerGold >= shopPrice1){
@@ -541,6 +557,7 @@ int main() {
          playerDefense = playerDefense + 10;
          playerGold = playerGold - shopPrice1;
       }
+      cout << "You bought " << shopOpt1 << endl;
     } else if (shopChoice == 2 && playerGold >= shopPrice2){
       if (shopOpt2 == shopItem1){
          playerHealth = playerHealth + 20;
@@ -561,6 +578,7 @@ int main() {
          playerDefense = playerDefense + 10;
          playerGold = playerGold - shopPrice2;
       }
+      cout << "You bought " << shopOpt2 << endl;
     } else if (shopChoice == 3 && playerGold >= shopPrice3){
       if (shopOpt3 == shopItem1){
          playerHealth = playerHealth + 20;
@@ -581,10 +599,16 @@ int main() {
          playerDefense = playerDefense + 10;
          playerGold = playerGold - shopPrice3;
       }
+      cout << "You bought " << shopOpt3 << endl;
+    } else if (shopChoice == 4){
+      cout << "Bye bye" << endl;
     } else {
-      return 0;
+      cout << "Sorry you don't have enough money loser go back to fighting" << endl;
     }
+    totalRounds += 1;
     shopStatus = false;
+    fightStatus = true;
+    characterSelectStatus = false;
    }
 
 }
