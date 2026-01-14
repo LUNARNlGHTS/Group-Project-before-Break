@@ -369,7 +369,7 @@ int main() {
             int randomEvent = randomInt(0, 150);
             if (randomEvent <= 140){
                 
-                int eventSelect = randomInt(0,10);
+                int eventSelect = randomInt(0,13);
                 if (eventSelect == 0) {
                     
                     cout << "You tripped on the rock that holds the world together, and fell over and died. Loser.";
@@ -409,8 +409,19 @@ int main() {
                 } else if (eventSelect == 9) {
                     cout << "You feed a hungry landshark a pizza. Tobey Maguire. It pays you.";
                     playerGold += 20;
-                } else if (evevntSelect == 10) {
-                    cout << "You found a 
+                } else if (eventSelect == 10) {
+                    cout << "You found a magic brick wall, It told you that your grandma lied when she said your handsome.";
+                    playerHealth -= 5;
+                } else if (eventSelect == 11) {
+                    cout << "You found a sentient blade of grass, it gave you the overwhelming crushing truth about your love life";
+                    playerHealth -= 5;
+                } else if (eventSelect == 12) {
+                    cout << "You admire the beauty of a mutated frog that consists of no body, no eyes, no legs, but has a single arm.";
+                    playerHealth += 3;
+                } else if (eventSelect == 13){
+                    cout << "You ate a rock and felt more confident."
+                        playerHealth +=5;
+                }
                     
                 
             
