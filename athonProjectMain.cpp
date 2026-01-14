@@ -393,7 +393,7 @@ int main() {
                     cout << "You ate your index finger";
                     playerHealth += 10;
                 } else if (eventSelect == 5) {
-                    cout << "You had a stroke and acidently summoned Cathulu"
+                    cout << "You had a stroke and acidently summoned Cathulu";
                         playerHealth = 0;
                 } else if (eventSelect == 6) {
                     
@@ -419,7 +419,7 @@ int main() {
                     cout << "You admire the beauty of a mutated frog that consists of no body, no eyes, no legs, but has a single arm.";
                     playerHealth += 3;
                 } else if (eventSelect == 13){
-                    cout << "You ate a rock and felt more confident."
+                    cout << "You ate a rock and felt more confident.";
                         playerHealth +=5;
                 }
                     
