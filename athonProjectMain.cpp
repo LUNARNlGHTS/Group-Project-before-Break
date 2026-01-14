@@ -382,7 +382,7 @@ int main() {
                     
                 } else if (eventSelect == 2) {
 
-                    cout << "You stubbed yur toe.";
+                    cout << "You stubbed your toe.";
                     playerHealth = 0;
                 
             } else if (eventSelect == 3) {
@@ -390,8 +390,22 @@ int main() {
                     playerHealth += 20;
                 } else if (eventSelect == 4){
 
+                    cout << "You ate your index finger";
+                    playerHealth += 10;
+                } else if (eventSelect == 5) {
+                    cout << "You had a stroke and acidently summoned Cathulu"
+                        playerHealth = 0;
+                } else if (eventSelect == 6) {
+                    
+                    cout << "You found a penny on the ground";
+                    playerGold += 1;
+                } else if (eventSelect == 7) {
+                    
+                    cout << "You harrased a baby into surrending it's candy to you";
+                    playerHealth += 5;
+                } else if (eventSelect == 8) {
                     cout << "
-                }
+                
             
             // resetting post random event
             playerHasInput = true;
