@@ -1,7 +1,7 @@
 /*Still need a working looping menu that has the options ot start a new adventure then lead to 
 character select or exit the program.*/
 // fix the bugs bro
-//WHERE DOES THE EVENT RANDOMIZER EVEN GO HELP OH MY LORD
+//WHERE DOES THE EVENT RANDOMIZER EVEN GO HELP OH MY LORD, I GOT IT NEVERMIND.
 #include <iostream>
 #include <fstream> 
 #include <vector>
@@ -25,7 +25,7 @@ int main() {
     
     
     // initial variables - player
-    int playerHealth, playerGold, playerStatus, playerDefense, playerAttack, playerClass, playerClassInfoSelection;
+    int playerHealth, playerGold, playerStatus, playerDefense, playerAttack, playerClass, playerClassInfoSelection, randomEvent, eventSelect;
     string playerName;
 
     // initial variables - enemies
@@ -366,7 +366,36 @@ int main() {
             sleep_for(seconds(1));
             playerHasInput = true;
             currentPlayerSelection = 0;
+            int randomEvent = randomInt(0, 150);
+            if (randomEvent <= 140){
+                
+                int eventSelect = randomInt(0,10);
+                if (eventSelect == 0) {
+                    
+                    cout << "You tripped on the rock that holds the world together, and fell over and died. Loser.";
+                    playerHealth = 0;
+                    
+                } else if (eventSelect == 1) {
 
+                    cout << "You looked into a mirror you found on the ground and cried until you died of dehydration.";
+                    playerHealth = 0;
+                    
+                } else if (eventSelect == 2) {
+
+                    cout << "You stubbed yur toe.";
+                    playerHealth = 0;
+                
+            } else if (eventSelect == 3) {
+                    cout << "You ate dirt";
+                    playerHealth += 20;
+                } else if (eventSelect == 4){
+
+                    cout << "
+                }
+            
+            // resetting post random event
+            playerHasInput = true;
+            currentPlayerSelection = 0;  
         }
         while (currentPlayerSelection == 2) {
 
