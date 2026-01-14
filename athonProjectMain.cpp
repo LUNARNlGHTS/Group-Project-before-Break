@@ -404,10 +404,14 @@ int main() {
                     cout << "You harrased a baby into surrending it's candy to you";
                     playerHealth += 5;
                 } else if (eventSelect == 8) {
-                    cout << "You went to the wrong block and King Von shoots you";
+                    cout << "You went to the wrong block and King Von attacks you";
                     playerHealth -= 10;
                 } else if (eventSelect == 9) {
-                    cout << "
+                    cout << "You feed a hungry landshark a pizza. Tobey Maguire. It pays you.";
+                    playerGold += 20;
+                } else if (evevntSelect == 10) {
+                    cout << "You found a 
+                    
                 
             
             // resetting post random event
