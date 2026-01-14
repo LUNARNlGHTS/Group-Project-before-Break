@@ -2,6 +2,7 @@
 character select or exit the program.*/
 // fix the bugs bro
 //WHERE DOES THE EVENT RANDOMIZER EVEN GO HELP OH MY LORD, I GOT IT NEVERMIND.
+//Austin as a heads up the random event stuff is in but needs to be debugged
 #include <iostream>
 #include <fstream> 
 #include <vector>
