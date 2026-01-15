@@ -206,7 +206,7 @@ int main() {
     totalRounds = 1;
 
     // inital enemy creation, gets effected per each round progressed
-    int baseEnemyAttack = 10000;
+    int baseEnemyAttack = 10;
     int baseEnemyHealth = 35;
     int baseEnemyDefense = 3;
     enemyAttack = baseEnemyAttack;
