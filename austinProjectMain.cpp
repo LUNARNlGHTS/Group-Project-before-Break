@@ -108,15 +108,16 @@ int main()
          {
 
             // specifying
-            playerHealth = 1;
-            playerAttack = 13;
-            playerDefense = 10;
+            playerHealth = 100;
+            playerAttack = 14;
+            playerDefense = 9;
             playerGold = 19;
 
             // info
             cout << "The Adventurer has mainly average stats, being useful in many categories." << endl;
             cout << "Health:  " << playerHealth << endl;
             cout << "Attack:  " << playerAttack << endl;
+            cout << "Gold:  " << playerGold << endl;
             cout << "Defense: " << playerDefense << "\n"
                  << endl;
 
@@ -132,7 +133,7 @@ int main()
                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
                cout << "Adventurer ";
                cin >> playerName;
-               outFile << "Adventurer " << playerName << " started their adventure!" << endl;
+               outFile << "Adventurer " << playerName << " started their adventure!\n\n" << endl;
 
                characterSelectStatus = false;
                shopStatus = false;
@@ -149,14 +150,15 @@ int main()
 
             // specifying
             playerHealth = 90;
-            playerAttack = 22;
-            playerDefense = 5;
-            playerGold = 2;
+            playerAttack = 19;
+            playerDefense = 4;
+            playerGold = 6;
 
             // info
             cout << "The Wizard has a high attack power, but lower defense power compared to other characters." << endl;
             cout << "Health:  " << playerHealth << endl;
             cout << "Attack:  " << playerAttack << endl;
+            cout << "Gold:  " << playerGold << endl;
             cout << "Defense: " << playerDefense << "\n"
                  << endl;
 
@@ -172,7 +174,7 @@ int main()
                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
                cout << "Wizard ";
                cin >> playerName;
-               outFile << "Wizard " << playerName << " started their adventure!" << endl;
+               outFile << "Wizard " << playerName << " started their adventure!\n\n" << endl;
 
                characterSelectStatus = false;
                shopStatus = false;
@@ -188,14 +190,15 @@ int main()
 
             // specifying
             playerHealth = 120;
-            playerAttack = 8;
-            playerDefense = 18;
-            playerGold = 41;
+            playerAttack = 11;
+            playerDefense = 15;
+            playerGold = 30;
 
             // info
             cout << "The Knight is a brute, who has high defense and health, although having a lower attack." << endl;
             cout << "Health:  " << playerHealth << endl;
             cout << "Attack:  " << playerAttack << endl;
+            cout << "Gold:  " << playerGold << endl;
             cout << "Defense: " << playerDefense << "\n"
                  << endl;
 
@@ -211,7 +214,7 @@ int main()
                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
                cout << "Knight ";
                cin >> playerName;
-               outFile << "Knight " << playerName << " started their adventure!" << endl;
+               outFile << "Knight " << playerName << " started their adventure\n\n!" << endl;
 
                characterSelectStatus = false;
                shopStatus = false;
@@ -239,24 +242,39 @@ int main()
       fightStatus = true;
 
       // inital enemy creation, gets effected per each round progressed
-      int baseEnemyAttack = 12;
-      int baseEnemyHealth = 35;
-      int baseEnemyDefense = 3;
-      enemyAttack = baseEnemyAttack;
-      enemyHealth = baseEnemyHealth;
-      enemyDefense = baseEnemyDefense;
+      int baseEnemyAttack;
+      int baseEnemyHealth;
+      int baseEnemyDefense;
+
+      if (totalRounds == 1) {
+
+         // woo hoo printing!
+         outFile << "\n\nROUND 1\n\n";
+
+         baseEnemyAttack = 12;
+         baseEnemyHealth = 35;
+         baseEnemyDefense = 3;
+         enemyAttack = baseEnemyAttack;
+         enemyHealth = baseEnemyHealth;
+         enemyDefense = baseEnemyDefense;
+
+      } else if (totalRounds >= 1) {
+
+         // fixes
+         enemyAttack  = baseEnemyAttack * pow(1.1, totalRounds);
+         enemyHealth  = baseEnemyHealth * pow(1.1, totalRounds);
+         enemyDefense = baseEnemyDefense * pow(1.1, totalRounds); 
+
+      }
 
       // initial setting of base player stats (for when dying to reset properly)
       int basePlayerAttack = playerAttack;
       int basePlayerHealth = playerHealth;
       int basePlayerDefense = playerDefense;
 
+
       while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false && fightStatus == true && characterSelectStatus == false)
       {
-
-         enemyAttack = baseEnemyAttack * pow(1.1, totalRounds);
-         enemyHealth = baseEnemyHealth * pow(1.1, totalRounds);
-         enemyDefense = baseEnemyDefense * pow(1.1, totalRounds);
 
          fightStatus = true;
          cout << "\n\n\n\n\n\n"
@@ -274,7 +292,7 @@ int main()
             cout << "\n\n\n\n\n\n"
                  << endl;
 
-            if (playerGameOverSelection == 1)
+            while (playerGameOverSelection == 1)
             {
 
                outFile << "After they collapsed, a new glimmer of hope shined in their eyes, allowing them to live once again.\n\n\n" << endl;
@@ -297,7 +315,7 @@ int main()
                playerHealth = basePlayerHealth;
                playerDefense = basePlayerDefense;
             }
-            else if (playerGameOverSelection == 2)
+            while (playerGameOverSelection == 2)
             {
 
                // file printing
@@ -316,24 +334,13 @@ int main()
 
                if (!outFile) {
                   cout << "\n\033[31mError opening file.\033[0m" << endl;
-                  return 1;
+
                }
 
-               // status resetting
-               menuStatus = true;
-               characterSelectStatus = false;
-               fightStatus = false;
-               shopStatus = false;
-               menuSelection = 0;
+               playerGameOverSelection = 0;
 
-               // player input resetting
-               playerClassInfoSelection = 0;
-               currentPlayerSelection = 0;
-               playerHasInput = false;
-
-               continue;
             }
-            else if (playerGameOverSelection == 0)
+            while (playerGameOverSelection == 0)
             {
 
                // status resetting
@@ -359,7 +366,8 @@ int main()
 
             cout << "You defeated the enemy, and earned a bit of gold!" << endl;
             outFile << "\nThe enemy was defeated!\n\n\n" << endl;
-            playerGold = playerGold + 10 * pow(1.1, totalRounds);
+            outFile << "\n\nROUND " << totalRounds << "\n\n";
+            playerGold = playerGold + 6 * pow(1.1, totalRounds);
             powerStrikeTurn = powerStrikeTurn + 1;
             sleep_for(seconds(3));
             cout << "\n\n\n\n\n\n";
@@ -385,7 +393,10 @@ int main()
             while (playerHasInput == true)
             {
 
-               damageDealtEnemy = max(0, enemyAttack - playerDefense);
+               damageDealtEnemy = max(0, enemyAttack - playerDefense / 2);
+               if (damageDealtEnemy == 0) {
+                  damageDealtEnemy = 1;
+               }
                playerHealth = playerHealth - damageDealtEnemy;
                cout << "You took " << damageDealtEnemy << " points of damage!" << endl;
                outFile << "The enemy dealt " << damageDealtEnemy << " points of damage!" << endl;
@@ -459,13 +470,14 @@ int main()
             currentPlayerSelection = 0;
 
             int randomEvent = randomInt(0, 100);
-            if (randomEvent >= 90)
+            if (randomEvent >= 85)
             {
                cout << "\n\n\n\n\n\n"
                     << endl;
-               int eventSelect = randomInt(0, 13);
+               int eventSelect = randomInt(0, 25);
                if (eventSelect == 0)
                {
+
                   cout << "You tripped on the rock that holds the world together, and fell over and died. Loser.";
                   playerHealth = 0;
                }
@@ -538,6 +550,67 @@ int main()
                {
                   cout << "You ate a rock and felt more confident.";
                   playerHealth += 5;
+               }
+               else if (eventSelect == 14)
+               {
+                  cout << "You ran into Batman, but it's ok, as you're a law abiding citizen.";
+                  playerAttack += 1;
+               }
+               else if (eventSelect == 15)
+               {
+                  cout << "Oh my lord is that John Roblox?!?";
+                  playerGold += 5;
+               }
+               else if (eventSelect == 16)
+               {
+                  cout << "You saw a half a cockroach do a triple backflip. You are filled with determination.";
+                     playerDefense += 1;
+               }
+               else if (eventSelect == 17)
+               {
+                  cout << "You caught Xaiver talking to a freshman, you are deeply and uterly disturbed.";
+                     playerDefense -= 1;
+               }
+               else if (eventSelect == 18)
+               {
+                  cout << "You found Coleman, drifted off into a deep state of zoned out, you are intimidated.";
+                     playerAttack -= 1;
+               }
+               else if (eventSelect == 19)
+               {
+                  cout << "Obama Prism";
+                  playerGold += 15;
+               }
+               else if (eventSelect == 20)
+               {
+                  cout << "You ran into a angry monkey, he attacks you.";
+                  playerHealth -=1;
+               }
+               else if (eventSelect == 21)
+               {
+                  cout << "You almost missed your attack, you are :Skull Moji:.";
+                  playerAttack -=1;
+               }
+               else if (eventSelect == 22)
+               {
+                  cout << "You feel some strange power growing from inside you.";
+                  playerAttack += 3;
+               }
+               else if (eventSelect == 23)
+               {
+                  cout << "You find a T.rex, your filled with primal awe.";
+                  playerDefense += 2;
+               }
+               else if (eventSelect == 24)
+               {
+                  cout << "Is that Joe Rogan????";
+                     playerDefense -= 2;
+               }
+               else if (eventSelect == 25)
+               {
+                  cout << "You're hungry.";
+                  playerAttack -= 1;
+                  playerDefense -=1;
                }
 
                cout << "\n";
@@ -863,9 +936,14 @@ int main()
             cout << "\n\n\n\n\n\nYou were caught trying to steal from the shop, and got kicked out immediately." << endl;
             sleep_for(seconds(1));
          }
-         totalRounds += 1;
+
+         // fix to enemies after shop
          shopStatus = false;
          fightStatus = true;
+
+         enemyAttack  = baseEnemyAttack  * pow(1.1, totalRounds);
+         enemyHealth  = baseEnemyHealth  * pow(1.1, totalRounds);
+         enemyDefense = baseEnemyDefense * pow(1.1, totalRounds); 
          characterSelectStatus = false;
       }
    }

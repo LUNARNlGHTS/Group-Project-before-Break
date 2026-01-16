@@ -413,7 +413,7 @@ int main()
             {
                cout << "\n\n\n\n\n\n"
                     << endl;
-               int eventSelect = randomInt(0, 13);
+               int eventSelect = randomInt(0, 25);
                if (eventSelect == 0)
                {
 
