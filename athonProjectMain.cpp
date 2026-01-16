@@ -490,6 +490,116 @@ int main()
                   cout << "You ate a rock and felt more confident.";
                   playerHealth += 5;
                }
+               else if (eventSelect == 14)
+               {
+                  cout << "You ran into Batman, but it's ok your a law abiding citizen.";
+                  playerAttack += 1;
+               }
+               else if (eventSelect == 15)
+               {
+                  cout << "Oh my lord is that John Roblox?!?";
+                  playerGold += 5;
+               }
+               else if (eventSelect == 16)
+               {
+                  cout << "You saw a half ate cockroach do a triple backflip. You are filled with determination."
+                     playerDefense += 1;
+               }
+               else if (eventSelect == 17)
+               {
+                  cout << "You caught Xaiver talking to a freshman, you are deeply and uterly disturbed.";
+                     playerDefense -= 1;
+               }
+               else if (eventSelect == 18)
+               {
+                  cout << "You found Coleman, drifted off into a deep state of zoned out, you are intimidated.";
+                     playerAttack -= 1;
+               }
+               else if (eventSelect == 19)
+               {
+                  cout << "Obama Prisum";
+                  playerGold += 15;
+               }
+               else if (eventSelect == 20)
+               {
+                  cout << "You ran into a angry monkey, he attacks you.";
+                  playerHealth -=1;
+               }
+               else if (eventSelect == 21)
+               {
+                  cout << "You almost missed your attack, you are embarsed.";
+                  playerAttack -=1;
+               }
+               else if (eventSelect == 22)
+               {
+                  cout << "You feel some strange power growing from inside you.";
+                  playerAttack +=2;
+               }
+               else if (eventSelect == 23)
+               {
+                  cout << "You find a T.rex, your filled with primal awe.";
+                  playerDefence += 2;
+               }
+               else if (eventSelect == 24)
+               {
+                  cout << "Is that Joe Rogan????";
+                     playerDefence -= 2;
+               }
+               else if (eventSelect == 25)
+               {
+                  cout << "Your hungry.";
+                  playerAttack -= 1;
+                  playerDefence -=1;
+               }
+               else if (eventSelect == 26)
+               {
+                  cout << "It starts with one
+One thing, I don't know why
+It doesn't even matter how hard you try
+Keep that in mind, I designed this rhyme to explain in due time
+All I know time is a valuable thing
+Watch it fly by as the pendulum swings
+Watch it count down to the end of the day, the clock ticks life away
+It's so unreal, didn't look out below
+Watch the time go right out the window
+Tryna hold on, d-didn't even know
+I wasted it all just to watch you go
+I kept everything inside
+And even though I tried, it all fell apart
+What it meant to me will eventually be a memory of a time when
+I tried so hard and got so far
+But in the end, it doesn't even matter
+I had to fall to lose it all
+But in the end, it doesn't even matter
+One thing, I don't know why
+It doesn't even matter how hard you try
+Keep that in mind, I designed this rhyme to remind myself how I tried so hard
+In spite of the way you were mockin' me, actin' like I was part of your property
+Rememberin' all the times you fought with me
+I'm surprised it got so far
+Things aren't the way they were before
+You wouldn't even recognize me anymore
+Not that you knew me back then, but it all comes back to me in the end
+You kept everything inside
+And even though I tried, it all fell apart
+What it meant to me will eventually be a memory of a time when
+I tried so hard and got so far
+But in the end, it doesn't even matter
+I had to fall to lose it all
+But in the end, it doesn't even matter
+I've put my trust in you
+Pushed as far as I can go
+For all this, there's only one thing you should know
+I've put my trust in you
+Pushed as far as I can go
+For all this, there's only one thing you should know
+I tried so hard and got so far
+But in the end, it doesn't even matter
+I had to fall to lose it all
+But in the end, it doesn't even matter";
+                  playerAttack += 5;
+                  playerDefence -=2;
+               }
 
                cout << "\n";
                sleep_for(seconds(3));
