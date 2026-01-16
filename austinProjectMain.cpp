@@ -1,8 +1,3 @@
-/*Still need a working looping menu that has the options ot start a new adventure then lead to
-character select or exit the program.*/
-// fix the bugs bro
-// WHERE DOES THE EVENT RANDOMIZER EVEN GO HELP OH MY LORD, I GOT IT NEVERMIND.
-// Austin as a heads up the random event stuff is in but needs to be debugged
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -23,6 +18,11 @@ int randomInt(int min, int max);
 
 int main()
 {
+
+   // file path specifications
+   ofstream outFile("./halfLife3Results.txt");
+   string filePath = "./halfLife3Results.txt";
+   string command = "notepad.exe \"" + filePath + "\"";
 
    // for game restarting
    bool gameRunning = true;
@@ -108,7 +108,7 @@ int main()
          {
 
             // specifying
-            playerHealth = 100;
+            playerHealth = 1;
             playerAttack = 13;
             playerDefense = 10;
             playerGold = 19;
@@ -132,6 +132,7 @@ int main()
                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
                cout << "Adventurer ";
                cin >> playerName;
+               outFile << "Adventurer " << playerName << " started their adventure!" << endl;
 
                characterSelectStatus = false;
                shopStatus = false;
@@ -171,6 +172,7 @@ int main()
                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
                cout << "Wizard ";
                cin >> playerName;
+               outFile << "Wizard " << playerName << " started their adventure!" << endl;
 
                characterSelectStatus = false;
                shopStatus = false;
@@ -209,10 +211,12 @@ int main()
                cout << "What is your name? (this will be used to show records of your progress!)" << endl;
                cout << "Knight ";
                cin >> playerName;
+               outFile << "Knight " << playerName << " started their adventure!" << endl;
 
                characterSelectStatus = false;
                shopStatus = false;
                fightStatus = true;
+
             }
             else
             {
@@ -235,7 +239,7 @@ int main()
       fightStatus = true;
 
       // inital enemy creation, gets effected per each round progressed
-      int baseEnemyAttack = 10;
+      int baseEnemyAttack = 12;
       int baseEnemyHealth = 35;
       int baseEnemyDefense = 3;
       enemyAttack = baseEnemyAttack;
@@ -250,6 +254,10 @@ int main()
       while (currentPlayerSelection == 0 && shopStatus == false && menuStatus == false && fightStatus == true && characterSelectStatus == false)
       {
 
+         enemyAttack = baseEnemyAttack * pow(1.1, totalRounds);
+         enemyHealth = baseEnemyHealth * pow(1.1, totalRounds);
+         enemyDefense = baseEnemyDefense * pow(1.1, totalRounds);
+
          fightStatus = true;
          cout << "\n\n\n\n\n\n"
               << endl; // both of these are for new line padding, looks better
@@ -257,6 +265,7 @@ int main()
          if (playerHealth <= 0)
          {
 
+            // death screen
             cout << "\033[31mYou collapsed...\033[37m" << endl;
             cout << "\n[1] - Retry            [2] - Print to File" << endl;
             cout << "[0] - Menu" << endl;
@@ -267,6 +276,8 @@ int main()
 
             if (playerGameOverSelection == 1)
             {
+
+               outFile << "After they collapsed, a new glimmer of hope shined in their eyes, allowing them to live once again.\n\n\n" << endl;
 
                // gamerule resetting
                totalRounds = 1;
@@ -285,6 +296,42 @@ int main()
                playerAttack = basePlayerAttack;
                playerHealth = basePlayerHealth;
                playerDefense = basePlayerDefense;
+            }
+            else if (playerGameOverSelection == 2)
+            {
+
+               // file printing
+               outFile << "The adventure ended here, with the player surviving " << totalRounds << " rounds." << endl;
+               outFile.close();
+
+               // display
+               ifstream inFile(filePath);
+               string line;
+
+               cout << "Attempting to open results in notepad.." << endl;
+
+               // notepad specifications for opening
+               string command = "notepad.exe \"" + filePath + "\"";
+               system(command.c_str());
+
+               if (!outFile) {
+                  cout << "\n\033[31mError opening file.\033[0m" << endl;
+                  return 1;
+               }
+
+               // status resetting
+               menuStatus = true;
+               characterSelectStatus = false;
+               fightStatus = false;
+               shopStatus = false;
+               menuSelection = 0;
+
+               // player input resetting
+               playerClassInfoSelection = 0;
+               currentPlayerSelection = 0;
+               playerHasInput = false;
+
+               continue;
             }
             else if (playerGameOverSelection == 0)
             {
@@ -311,7 +358,8 @@ int main()
             totalRounds = totalRounds + 1;
 
             cout << "You defeated the enemy, and earned a bit of gold!" << endl;
-            playerGold = playerGold + 10 * pow(1.25, totalRounds);
+            outFile << "\nThe enemy was defeated!\n\n\n" << endl;
+            playerGold = playerGold + 10 * pow(1.1, totalRounds);
             powerStrikeTurn = powerStrikeTurn + 1;
             sleep_for(seconds(3));
             cout << "\n\n\n\n\n\n";
@@ -340,6 +388,7 @@ int main()
                damageDealtEnemy = max(0, enemyAttack - playerDefense);
                playerHealth = playerHealth - damageDealtEnemy;
                cout << "You took " << damageDealtEnemy << " points of damage!" << endl;
+               outFile << "The enemy dealt " << damageDealtEnemy << " points of damage!" << endl;
                sleep_for(seconds(1));
                currentPlayerSelection = 0;
                playerHasInput = false;
@@ -379,7 +428,7 @@ int main()
 
                cout << "An enemy appears! What will you do?" << endl;
                cout << "[1] - Fight            \033[33m[2] - Power Strike\033[37m" << endl;
-               cout << "[3] - Inspect          [4] - Defend" << endl;
+               cout << "[3] - Inspect" << endl;
                cout << "Selection: ";
                cin >> currentPlayerSelection;
             }
@@ -388,7 +437,7 @@ int main()
 
                cout << "An enemy appears! What will you do?" << endl;
                cout << "[1] - Fight            [2] - Power Strike" << endl;
-               cout << "[3] - Inspect          [4] - Defend" << endl;
+               cout << "[3] - Inspect" << endl;
                cout << "Selection: ";
                cin >> currentPlayerSelection;
             }
@@ -404,6 +453,7 @@ int main()
             damageDealtPlayer = playerAttack;
             enemyHealth = enemyHealth - damageDealtPlayer;
             cout << damageDealtPlayer << " damage was done to the enemy!" << endl;
+            outFile << damageDealtPlayer << " damage was done to the enemy!" << endl;
             sleep_for(seconds(1));
             playerHasInput = true;
             currentPlayerSelection = 0;
@@ -416,7 +466,6 @@ int main()
                int eventSelect = randomInt(0, 13);
                if (eventSelect == 0)
                {
-
                   cout << "You tripped on the rock that holds the world together, and fell over and died. Loser.";
                   playerHealth = 0;
                }
@@ -510,6 +559,7 @@ int main()
                damageDealtPlayer = damageDealtPlayer * 3;
                enemyHealth = enemyHealth - damageDealtPlayer;
                cout << "A power strike of " << damageDealtPlayer << " damage was done to the enemy!!" << endl;
+               outFile << "A power strike of " << damageDealtPlayer << " damage was done to the enemy!!" << endl;
                sleep_for(seconds(1));
 
                // resetting
@@ -537,28 +587,13 @@ int main()
             cout << "HP:  " << enemyHealth << endl;
             cout << "ATK:  " << enemyAttack << endl;
             cout << "DEF: " << enemyDefense << endl;
-            cout << "STATUS:  " << enemyStatus << endl;
             cout << "\n[0] - Quit" << endl;
             cout << "Selection: ";
             cin >> currentPlayerSelection;
          }
 
-         while (currentPlayerSelection == 4)
+         while (currentPlayerSelection >= 4)
          {
-
-            cout << "Stats of the current enemy" << endl;
-            cout << "Health:  " << enemyHealth << endl;
-            cout << "Attack:  " << enemyAttack << endl;
-            cout << "Defense: " << enemyDefense << endl;
-            cout << "Status:  " << enemyStatus << endl;
-            cout << "\n[0] - Quit" << endl;
-            cout << "Selection: ";
-            cin >> currentPlayerSelection;
-         }
-
-         while (currentPlayerSelection >= 5)
-         {
-
             currentPlayerSelection = 0;
          }
       }
@@ -742,7 +777,8 @@ int main()
                playerDefense = playerDefense + 10;
                playerGold = playerGold - shopPrice1;
             }
-            cout << "\n\n\n\n\n\nYou bought " << shopOpt1 << endl;
+            cout << "\n\n\n\n\n\nYou bought " << shopOpt1 << "." << endl;
+            outFile << "The player bought a " << shopOpt1 << "." << endl;
             sleep_for(seconds(1));
          }
          else if (shopChoice == 2 && playerGold >= shopPrice2)
@@ -778,6 +814,7 @@ int main()
                playerGold = playerGold - shopPrice2;
             }
             cout << "\n\n\n\n\n\nYou bought " << shopOpt2 << endl;
+            outFile << "The player bought a " << shopOpt2 << "." << endl;
             sleep_for(seconds(1));
          }
          else if (shopChoice == 3 && playerGold >= shopPrice3)
@@ -813,6 +850,7 @@ int main()
                playerGold = playerGold - shopPrice3;
             }
             cout << "\n\n\n\n\n\nYou bought " << shopOpt3 << endl;
+            outFile << "The player bought a " << shopOpt3 << "." << endl;
             sleep_for(seconds(1));
          }
          else if (shopChoice == 4)
